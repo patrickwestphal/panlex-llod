@@ -23,7 +23,7 @@ Create View ap As
     }
     With
         ?s  = uri(concat(plx:source,'/', ?ap))
-        ?l  = uri(?tt)
+        ?l  = plainLiteral(?tt)
         ?u  = uri(?ur)
         ?i  = plainLiteral(?bn)
         ?a  = typedLiteral(?au, xsd:string)
