@@ -86,6 +86,19 @@ Create View lv AS
     From
         lv
 
+// (mi)
+// mappings concerning meaning identifiers (representing ids of other web
+// sites) stored in the mi table
+Create View mi As
+    Construct {
+        ?mean plx:identifier ?labl.
+    }
+    With
+        ?mean = uri(concat(plx:meaning, '/', ?mn))
+        ?labl = plainLiteral(?tt)
+    From
+        mi
+
 // (mn)
 // mappings concerning meanings stored in the mn table
 Create View mn As
