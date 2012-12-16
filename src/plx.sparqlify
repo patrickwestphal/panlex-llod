@@ -4,7 +4,7 @@ Prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 Prefix foaf:<http://xmlns.com/foaf/0.1/>
 Prefix dc:<http://purl.org/dc/elements/1.1/>
 Prefix xsd:<http://www.w3.org/2001/XMLSchema#>
-Prefix plx:<http://panlex.org/plx/#>
+Prefix plx:<http://panlex.org/plx/>
 Prefix owl:<http://www.w3.org/2002/07/owl#>
 
 
@@ -129,6 +129,79 @@ Create View mn As
         ?appr = uri(concat(plx:approver, '/', ?ap))
     From
         mn
+
+// (wc, wcex)
+// mappings concerning word classes (verb, noun, pronoun etc.) of a denotation
+Create View wc As
+    Construct {
+        ?wcls a plx:WordClass.
+        ?wcls plx:label ?labl.
+        ?deno plx:wordClass ?wcls.
+    }
+    With
+        ?wcls = uri(concat(plx:wordClass, '/', ?tt))
+        ?labl = plainLiteral(?tt)
+        ?deno = uri(concat(plx:denotation, '/', ?dn))
+    From
+        // TODO: know why there are ~3981405 expressions but only 15 word
+        // classes and why there are no direct references to the word classes
+        [[SELECT wc.dn, wcex.tt FROM wc JOIN wcex ON wc.ex = wcex.ex]]
+
+// static word class mappings to dbpedia
+// TODO: check if there is a LLOD source providing OLIF data
+// TODO: this feels like a hack to create static mappings --> ask Aklakan if
+//       this is the only way to do so
+Create View wc_dbpedia As
+    Construct {
+        ?plxmisc owl:sameAs ?dbpmisc.  // 01
+        ?plxpron owl:sameAs ?dbppron.  // 02
+        ?plxaffx owl:sameAs ?dbpaffx.  // 03
+        ?plxauxv owl:sameAs ?dbpauxv.  // 04
+        ?plxname owl:sameAs ?dbpname.  // 05
+        ?plxadjv owl:sameAs ?dbpadjv.  // 06
+        ?plxdetr owl:sameAs ?dbpdetr.  // 07
+        ?plxverb owl:sameAs ?dbpverb.  // 08
+        ?plxpost owl:sameAs ?dbppost.  // 09
+        ?plxnoun owl:sameAs ?dbpnoun.  // 10
+        ?plxijec owl:sameAs ?dbpijec.  // 11
+        ?plxvpar owl:sameAs ?dbpvpar.  // 12
+        ?plxprep owl:sameAs ?dbpprep.  // 13
+        ?plxadvb owl:sameAs ?dbpadvb.  // 14
+        ?plxconj owl:sameAs ?dbpconj.  // 15
+    }
+    With
+        ?plxmisc = uri(concat(plx:wordClass, '/misc'))  // 01
+        ?dbpmisc = uri('http://dbpedia.org/resource/Miscellaneous')
+        ?plxpron = uri(concat(plx:wordClass, '/pron'))  // 02
+        ?dbppron = uri('http://dbpedia.org/resource/Pronoun')
+        ?plxaffx = uri(concat(plx:wordClass, '/affx'))  // 03
+        ?dbpaffx = uri('http://dbpedia.org/resource/Affix')
+        ?plxauxv = uri(concat(plx:wordClass, '/auxv'))  // 04
+        ?dbpauxv = uri('http://dbpedia.org/resource/Auxiliary_verb')
+        ?plxname = uri(concat(plx:wordClass, '/name'))  // 05
+        ?dbpname = uri('http://dbpedia.org/resource/Name')
+        ?plxadjv = uri(concat(plx:wordClass, '/adjv'))  // 06
+        ?dbpadjv = uri('http://dbpedia.org/resource/Adjective')
+        ?plxdetr = uri(concat(plx:wordClass, '/detr'))  // 07
+        ?dbpdetr = uri('http://dbpedia.org/resource/Determiner_%28linguistics%29')
+        ?plxverb = uri(concat(plx:wordClass, '/verb'))  // 08
+        ?dbpverb = uri('http://dbpedia.org/resource/Verb')
+        ?plxpost = uri(concat(plx:wordClass, '/post'))  // 09
+        ?dbppost = uri('http://dbpedia.org/resource/Postposition')
+        ?plxnoun = uri(concat(plx:wordClass, '/noun'))  // 10
+        ?dbpnoun = uri('http://dbpedia.org/resource/Noun')
+        ?plxijec = uri(concat(plx:wordClass, '/ijec'))  // 11
+        ?dbpijec = uri('http://dbpedia.org/resource/Interjection')
+        ?plxvpar = uri(concat(plx:wordClass, '/vpar'))  // 12
+        ?dbpvpar = uri('http://dbpedia.org/resource/Verb_particle')
+        ?plxprep = uri(concat(plx:wordClass, '/prep'))  // 13
+        ?dbpprep = uri('http://dbpedia.org/resource/Preposition')
+        ?plxadvb = uri(concat(plx:wordClass, '/advb'))  // 14
+        ?dbpadvb = uri('http://dbpedia.org/resource/Adverb')
+        ?plxconj = uri(concat(plx:wordClass, '/conj'))  // 15
+        ?dbpconj = uri('http://dbpedia.org/resource/Conjunction_(grammar)')
+    From
+        wc
 
 // *************************************************************************
 // // (i1)
