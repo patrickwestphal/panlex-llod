@@ -25,7 +25,7 @@ Create View ap As
         ?appr plx:quality ?qual.
     }
     With
-        ?appr = uri(concat(plx:Approver, '/', ?ap))
+        ?appr = uri(concat(plx:approver, '/', ?ap))
         ?rgdt = typedLiteral(?dt, xsd:date)
         ?labl = plainLiteral(?tt)
         ?uri  = uri(?ur)
@@ -37,6 +37,21 @@ Create View ap As
         ?qual = typedLiteral(?uq, xsd:integer)
     From
         ap
+
+// (lv)
+// mappings concerning language varieties stored in the lv table
+Create View lv AS
+    Construct {
+        ?lvar a plx:LanguageVariety.
+        ?lvar plx:belongsToLanguage ?lang.
+        ?lvar plx:varietyName ?name
+    }
+    With
+        ?lvar = uri(concat(plx:variety, '/', ?lv))
+        ?lang = uri(concat(plx:language, '/', ?lc))
+        ?name = plainLiteral(?tt)
+    From
+        lv
 
 // (df)
 // mappings concerning meaning definitions
@@ -114,19 +129,4 @@ Create View lc As
         ?tp = typedLiteral(?tp, xsd:string)
     From
         lc
-
-// (lv)
-// mappings concerning languages and varieties
-Create View lv As
-    Construct {
-        ?lv a plx:variety.
-        ?lv plx:belongsTo ?lc.
-        ?lv plx:hasName ?tt.
-    }
-    With
-        ?lv = uri(concat(plx:variety,'/',?lv))
-        ?lc = uri(concat(plx:langCode,'/',?lc))
-        ?tt = typedLiteral(?tt, xsd:string)
-    From
-        lv
 
