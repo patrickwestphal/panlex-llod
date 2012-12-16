@@ -38,6 +38,18 @@ Create View ap As
     From
         ap
 
+// (av)
+// mappings concerning approver varieties stored in the av table
+Create View av As
+    Construct {
+        ?appr plx:languageVariety ?lvar.
+    }
+    With
+        ?appr = uri(concat(plx:approver, '/', ?ap))
+        ?lvar = uri(concat(plx:languageVariety, '/', ?lv))
+    From
+        av
+
 // (df)
 // mappings concerning definitions (being a textual representation of a
 // meaning in a given variety) stored in the df table
@@ -45,7 +57,7 @@ Create View df As
     Construct {
         ?defn a plx:Definition.
         ?mean plx:meaningDefinition ?defn.
-        ?defn plx:variety ?lvar.
+        ?defn plx:languageVariety ?lvar.
         ?defn plx:text ?text.
     }
     With
@@ -77,7 +89,7 @@ Create View dn As
 Create View ex As
     Construct {
         ?expr a plx:Expression.
-        ?expr plx:variety ?lvar.
+        ?expr plx:languageVariety ?lvar.
         ?expr plx:text ?etxt.
         ?expr plx:degradedText ?dtxt.
     }
@@ -95,7 +107,7 @@ Create View lv AS
     Construct {
         ?lvar a plx:LanguageVariety.
         ?lvar plx:belongsToLanguage ?lang.
-        ?lvar plx:varietyName ?name
+        ?lvar plx:languageVarietyName ?name
     }
     With
         ?lvar = uri(concat(plx:languageVariety, '/', ?lv))
