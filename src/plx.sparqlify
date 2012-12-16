@@ -38,6 +38,24 @@ Create View ap As
     From
         ap
 
+// (df)
+// mappings concerning definitions (being a textual representation of a
+// meaning in a given variety) stored in the df table
+Create View df As
+    Construct {
+        ?defn a plx:Definition.
+        ?mean plx:meaningDefinition ?defn.
+        ?defn plx:variety ?lvar.
+        ?defn plx:text ?text.
+    }
+    With
+        ?defn = uri(concat(plx:definition, '/', ?df))
+        ?mean = uri(concat(plx:meaning, '/', ?mn))
+        ?lvar = uri(concat(plx:languageVariety, '/', ?lv))
+        ?text = plainLiteral(?tt)
+    From
+        df
+
 // (dn)
 // mappings concerning denotations (connecting expressions with meanings)
 // stored in the dn table
@@ -113,24 +131,6 @@ Create View mn As
         mn
 
 // *************************************************************************
-// // (df)
-// // mappings concerning meaning definitions
-// Create View df As
-//     Construct {
-//         ?mn a plx:Meaning.
-//         ?mt a plx:MeaningText.
-//         ?mn plx:meaningText ?mt.
-//         ?mt plx:meaningTextVariety ?lv.
-//         ?mt plx:definitionText ?tt.
-//     }
-//     With
-//         ?mn = uri(concat(plx:meaning,'/',?mn))
-//         ?mt = uri(concat(plx:meaningText,'/',?df))
-//         ?lv = uri(concat(plx:variety,'/',?lv))
-//         ?tt = typedLiteral(?tt, xsd:string)
-//     From
-//         df
-// 
 // // (i1)
 // // ISO 639-3 language name links to lexvo.org
 // Create View i1 As
