@@ -101,6 +101,23 @@ Create View ex As
     From
         ex
 
+// (i1)
+// ISO 639-3 language name links to lexvo.org
+Create View i1 As
+    Construct {
+        ?iso1 a plx:Iso639-1Code.
+        ?iso3 a plx:Iso639-3Code.
+        ?iso1 owl:sameAs ?lexvo1.
+        ?iso3 owl:sameAs ?lexvo3.
+    }
+    With
+        ?iso1 = uri(concat(plx:iso639-1,'/',?iso1))
+        ?iso3 = uri(concat(plx:iso639-3,'/',?iso3))
+        ?lexvo1 = uri(concat('http://lexvo.org/id/iso639-1/',?iso1))
+        ?lexvo3 = uri(concat('http://lexvo.org/id/iso639-3/',?iso3))
+    From
+        i1
+
 // (lv)
 // mappings concerning language varieties stored in the lv table
 Create View lv AS
@@ -214,34 +231,3 @@ Create View wc_dbpedia As
         ?dbpconj = uri('http://dbpedia.org/resource/Conjunction_(grammar)')
     From
         wc
-
-// *************************************************************************
-// // (i1)
-// // ISO 639-3 language name links to lexvo.org
-// Create View i1 As
-//     Construct {
-//         ?iso1 a plx:iso639-1.
-//         ?iso1 owl:sameAs ?lexvo1.
-//         ?iso3 owl:sameAs ?lexvo3.
-//     }
-//     With
-//         ?iso1 = uri(concat(plx:iso639-1,'/',?iso1))
-//         ?iso3 = uri(concat(plx:iso639-3,'/',?iso3))
-//         ?lexvo1 = uri(concat('http://lexvo.org/id/iso639-1/',?iso1))
-//         ?lexvo3 = uri(concat('http://lexvo.org/id/iso639-3/',?iso3))
-//     From
-//         i1
-// 
-// // (lc)
-// // mappings concerning language codes
-// Create View lc As
-//     Construct {
-//         ?lc a plx:langCode.
-//         ?lc plx:hasLangCodeType ?tp.
-//     }
-//     With
-//         ?lc = uri(concat(plx:langCode,'/',?lc))
-//         ?tp = typedLiteral(?tp, xsd:string)
-//     From
-//         lc
-// 
