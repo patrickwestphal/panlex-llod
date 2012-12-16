@@ -38,6 +38,22 @@ Create View ap As
     From
         ap
 
+// (dn)
+// mappings concerning denotations (connecting expressions with meanings)
+// stored in the dn table
+Create View dn As
+    Construct {
+        ?deno a plx:Denotation.
+        ?deno plx:denotationMeaning ?mean.
+        ?deno plx:denotationExpression ?expr.
+    }
+    With
+        ?deno = uri(concat(plx:denotation, '/', ?dn))
+        ?mean = uri(concat(plx:meaning, '/', ?mn))
+        ?expr = uri(concat(plx:expression, '/', ?ex))
+    From
+        dn
+
 // (ex)
 // mappings concerning expressions stored in the ex table
 Create View ex As
@@ -73,7 +89,7 @@ Create View lv AS
 // (mn)
 // mappings concerning meanings stored in the mn table
 Create View mn As
-    Construct{
+    Construct {
         ?mean a plx:Meaning.
         ?mean plx:approver ?appr.
     }
@@ -101,21 +117,6 @@ Create View mn As
 //         ?tt = typedLiteral(?tt, xsd:string)
 //     From
 //         df
-// 
-// // (dn)
-// // mappings concerning denotations
-// Create View dn As
-//     Construct {
-//         ?dn a plx:Denotation.
-//         ?dn plx:denotationExpression ?ex.
-//         ?dn plx:denotationMeaning ?mn.
-//     }
-//     With
-//         ?dn = uri(concat(plx:Denotation, '/', ?dn)
-//         ?ex = uri(concat(plx:expression,'/',?ex))
-//         ?mn = uri(concat(plx:meaning,'/',?mn))
-//     From
-//         dn
 // 
 // // (i1)
 // // ISO 639-3 language name links to lexvo.org
