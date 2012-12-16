@@ -9,38 +9,43 @@ Prefix owl:<http://www.w3.org/2002/07/owl#>
 
 
 // (ap)
-// mappings concerning language sources stored in the ap table
+// mappings concerning approvers beeing sources of tranlations stored in
+// the ap table
 Create View ap As
     Construct {
-        ?s a plx:source.
-        ?s plx:hasLabel ?l.
-        ?s plx:hasUri ?u.
-        ?s plx:hasIsbn ?i.
-        ?s plx:hasAuthor ?a .
-        ?s plx:hasTitle ?t.
-        ?s plx:hasYearOfPublication ?y.
-        ?s plx:hasLicense ?li.
+        ?appr a plx:Approver.
+        ?appr plx:registrationDate ?rgdt.
+        ?appr plx:label ?labl.
+        ?appr plx:uri ?uri.
+        ?appr plx:isbn ?isbn.
+        ?appr plx:author ?auth.
+        ?appr plx:title ?titl.
+        ?appr plx:publisher ?publ.
+        ?appr plx:yearOfPublication ?year.
+        ?appr plx:quality ?qual.
     }
     With
-        ?s  = uri(concat(plx:source,'/', ?ap))
-        ?l  = plainLiteral(?tt)
-        ?u  = uri(?ur)
-        ?i  = plainLiteral(?bn)
-        ?a  = typedLiteral(?au, xsd:string)
-        ?t  = typedLiteral(?ti, xsd:string)
-        ?y  = typedLiteral(?yr, xsd:integer)
-        ?li = plainLiteral(?li)
+        ?appr = uri(concat(plx:Approver, '/', ?ap))
+        ?rgdt = typedLiteral(?dt, xsd:date)
+        ?labl = plainLiteral(?tt)
+        ?uri  = uri(?ur)
+        ?isbn = plainLiteral(?bn)
+        ?auth = typedLiteral(?au, xsd:string)
+        ?titl = typedLiteral(?ti, xsd:string)
+        ?publ = plainLiteral(?pb)
+        ?year = typedLiteral(?yr, xsd:integer)
+        ?qual = typedLiteral(?uq, xsd:integer)
     From
-        ap 
+        ap
 
 // (df)
 // mappings concerning meaning definitions
 Create View df As
     Construct {
-        ?mn a plx:meaning.
-        ?mt a plx:meaningText.
-        ?mn plx:hasMeaningText ?mt.
-        ?mt plx:varietyOfMeaningText ?lv.
+        ?mn a plx:Meaning.
+        ?mt a plx:MeaningText.
+        ?mn plx:meaningText ?mt.
+        ?mt plx:meaningTextVariety ?lv.
         ?mt plx:definitionText ?tt.
     }
     With
@@ -55,9 +60,12 @@ Create View df As
 // mappings concerning denotations
 Create View dn As
     Construct {
-        ?ex plx:denotes ?mn.
+        ?dn a plx:Denotation.
+        ?dn plx:denotationExpression ?ex.
+        ?dn plx:denotationMeaning ?mn.
     }
     With
+        ?dn = uri(concat(plx:Denotation, '/', ?dn)
         ?ex = uri(concat(plx:expression,'/',?ex))
         ?mn = uri(concat(plx:meaning,'/',?mn))
     From
