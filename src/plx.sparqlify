@@ -69,6 +69,20 @@ Create View lv AS
         ?name = plainLiteral(?tt)
     From
         lv
+
+// (mn)
+// mappings concerning meanings stored in the mn table
+Create View mn As
+    Construct{
+        ?mean a plx:Meaning.
+        ?mean plx:approver ?appr.
+    }
+    With
+        ?mean = uri(concat(plx:meaning, '/', ?mn))
+        ?appr = uri(concat(plx:approver, '/', ?ap))
+    From
+        mn
+
 // *************************************************************************
 // // (df)
 // // mappings concerning meaning definitions
