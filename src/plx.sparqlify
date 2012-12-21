@@ -6,6 +6,7 @@ Prefix dc:<http://purl.org/dc/elements/1.1/>
 Prefix xsd:<http://www.w3.org/2001/XMLSchema#>
 Prefix plx:<http://panlex.org/plx/>
 Prefix owl:<http://www.w3.org/2002/07/owl#>
+Prefix lvont: <http://lexvo.org/ontology#>
 
 
 // (ap)
@@ -96,8 +97,8 @@ Create View ex As
     With
         ?expr = uri(concat(plx:expression, '/', ?ex))
         ?lvar = uri(concat(plx:languageVariety, '/', ?lv))
-        ?etxt = typedLiteral(?tt, 'xsd:string')
-        ?dtxt = typedLiteral(?td, 'xsd:string')
+        ?etxt = typedLiteral(?tt, xsd:string)
+        ?dtxt = typedLiteral(?td, xsd:string)
     From
         ex
 
@@ -109,12 +110,18 @@ Create View i1 As
         ?iso3 a plx:Iso639-3Code.
         ?iso1 owl:sameAs ?lexvo1.
         ?iso3 owl:sameAs ?lexvo3.
+        ?lang a plx:Language.
+        ?lang a lvont:Language.
+        ?lang a <http://schema.org/Language>.
+        ?lang plx:iso639-1Code ?iso1.
+        ?lang plx:iso639-3Code ?iso3.
     }
     With
-        ?iso1 = uri(concat(plx:iso639-1,'/',?iso1))
-        ?iso3 = uri(concat(plx:iso639-3,'/',?iso3))
-        ?lexvo1 = uri(concat('http://lexvo.org/id/iso639-1/',?iso1))
-        ?lexvo3 = uri(concat('http://lexvo.org/id/iso639-3/',?iso3))
+        ?iso1 = uri(concat(plx:iso639-1, '/', ?iso1))
+        ?iso3 = uri(concat(plx:iso639-3, '/', ?iso3))
+        ?lexvo1 = uri(concat('http://lexvo.org/id/iso639-1/', ?iso1))
+        ?lexvo3 = uri(concat('http://lexvo.org/id/iso639-3/', ?iso3))
+        ?lang = uri(concat(plx:language, '/', ?iso3))
     From
         i1
 
@@ -178,56 +185,21 @@ Create View wc As
 
 // static word class mappings to dbpedia
 // TODO: check if there is a LLOD source providing OLIF data
-// TODO: this feels like a hack to create static mappings --> ask Aklakan if
-//       this is the only way to do so
 Create View wc_dbpedia As
     Construct {
-        ?plxmisc owl:sameAs ?dbpmisc.  // 01
-        ?plxpron owl:sameAs ?dbppron.  // 02
-        ?plxaffx owl:sameAs ?dbpaffx.  // 03
-        ?plxauxv owl:sameAs ?dbpauxv.  // 04
-        ?plxname owl:sameAs ?dbpname.  // 05
-        ?plxadjv owl:sameAs ?dbpadjv.  // 06
-        ?plxdetr owl:sameAs ?dbpdetr.  // 07
-        ?plxverb owl:sameAs ?dbpverb.  // 08
-        ?plxpost owl:sameAs ?dbppost.  // 09
-        ?plxnoun owl:sameAs ?dbpnoun.  // 10
-        ?plxijec owl:sameAs ?dbpijec.  // 11
-        ?plxvpar owl:sameAs ?dbpvpar.  // 12
-        ?plxprep owl:sameAs ?dbpprep.  // 13
-        ?plxadvb owl:sameAs ?dbpadvb.  // 14
-        ?plxconj owl:sameAs ?dbpconj.  // 15
+        <http://panlex.org/plx/wordClass/misc> owl:sameAs <http://dbpedia.org/resource/Miscellaneous>.
+        <http://panlex.org/plx/wordClass/pron> owl:sameAs <http://dbpedia.org/resource/Pronoun>.
+        <http://panlex.org/plx/wordClass/affx> owl:sameAs <http://dbpedia.org/resource/Affix>.
+        <http://panlex.org/plx/wordClass/auxv> owl:sameAs <http://dbpedia.org/resource/Auxiliary_verb>.
+        <http://panlex.org/plx/wordClass/name> owl:sameAs <http://dbpedia.org/resource/Name>.
+        <http://panlex.org/plx/wordClass/adjv> owl:sameAs <http://dbpedia.org/resource/Adjective>.
+        <http://panlex.org/plx/wordClass/detr> owl:sameAs <http://dbpedia.org/resource/Determiner_%28linguistics%29>.
+        <http://panlex.org/plx/wordClass/verb> owl:sameAs <http://dbpedia.org/resource/Verb>.
+        <http://panlex.org/plx/wordClass/post> owl:sameAs <http://dbpedia.org/resource/Postposition>.
+        <http://panlex.org/plx/wordClass/noun> owl:sameAs <http://dbpedia.org/resource/Noun>.
+        <http://panlex.org/plx/wordClass/ijec> owl:sameAs <http://dbpedia.org/resource/Interjection>.
+        <http://panlex.org/plx/wordClass/vpar> owl:sameAs <http://dbpedia.org/resource/Verb_particle>.
+        <http://panlex.org/plx/wordClass/prep> owl:sameAs <http://dbpedia.org/resource/Preposition>.
+        <http://panlex.org/plx/wordClass/advb> owl:sameAs <http://dbpedia.org/resource/Adverb>.
+        <http://panlex.org/plx/wordClass/conj> owl:sameAs <http://dbpedia.org/resource/Conjunction_(grammar)>.
     }
-    With
-        ?plxmisc = uri(concat(plx:wordClass, '/misc'))  // 01
-        ?dbpmisc = uri('http://dbpedia.org/resource/Miscellaneous')
-        ?plxpron = uri(concat(plx:wordClass, '/pron'))  // 02
-        ?dbppron = uri('http://dbpedia.org/resource/Pronoun')
-        ?plxaffx = uri(concat(plx:wordClass, '/affx'))  // 03
-        ?dbpaffx = uri('http://dbpedia.org/resource/Affix')
-        ?plxauxv = uri(concat(plx:wordClass, '/auxv'))  // 04
-        ?dbpauxv = uri('http://dbpedia.org/resource/Auxiliary_verb')
-        ?plxname = uri(concat(plx:wordClass, '/name'))  // 05
-        ?dbpname = uri('http://dbpedia.org/resource/Name')
-        ?plxadjv = uri(concat(plx:wordClass, '/adjv'))  // 06
-        ?dbpadjv = uri('http://dbpedia.org/resource/Adjective')
-        ?plxdetr = uri(concat(plx:wordClass, '/detr'))  // 07
-        ?dbpdetr = uri('http://dbpedia.org/resource/Determiner_%28linguistics%29')
-        ?plxverb = uri(concat(plx:wordClass, '/verb'))  // 08
-        ?dbpverb = uri('http://dbpedia.org/resource/Verb')
-        ?plxpost = uri(concat(plx:wordClass, '/post'))  // 09
-        ?dbppost = uri('http://dbpedia.org/resource/Postposition')
-        ?plxnoun = uri(concat(plx:wordClass, '/noun'))  // 10
-        ?dbpnoun = uri('http://dbpedia.org/resource/Noun')
-        ?plxijec = uri(concat(plx:wordClass, '/ijec'))  // 11
-        ?dbpijec = uri('http://dbpedia.org/resource/Interjection')
-        ?plxvpar = uri(concat(plx:wordClass, '/vpar'))  // 12
-        ?dbpvpar = uri('http://dbpedia.org/resource/Verb_particle')
-        ?plxprep = uri(concat(plx:wordClass, '/prep'))  // 13
-        ?dbpprep = uri('http://dbpedia.org/resource/Preposition')
-        ?plxadvb = uri(concat(plx:wordClass, '/advb'))  // 14
-        ?dbpadvb = uri('http://dbpedia.org/resource/Adverb')
-        ?plxconj = uri(concat(plx:wordClass, '/conj'))  // 15
-        ?dbpconj = uri('http://dbpedia.org/resource/Conjunction_(grammar)')
-    From
-        wc
