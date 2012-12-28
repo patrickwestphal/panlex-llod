@@ -55,14 +55,14 @@ Create View apli AS
         [[WITH license_labels AS (
             SELECT 10 AS id, 'Public Domain' AS lbl UNION ALL  -- nr/pbl
             SELECT 20 AS id, 'Create Commons' AS lbl UNION ALL  -- cc/ccl
-            SELECT 30 AS id, 'The authors have to be asked' AS lbl UNION ALL  -- rp/ask
+            SELECT 30 AS id, 'request' AS lbl UNION ALL  -- rp/ask
             SELECT 40 AS id, 'GNU General Public License' AS lbl UNION ALL  -- gp/gpl
-            -- SELECT 50 AS id, '?' AS lbl UNION ALL  -- gl/gll
+            SELECT 50 AS id, 'GNU Lesser General Public License' AS lbl UNION ALL  -- gl/gll
             SELECT 60 AS id, 'GNU Free Documentation License' AS lbl UNION ALL  -- gd/gfd
-            -- SELECT 65 AS id, '?' AS lbl UNION ALL  -- mi/mit
-            SELECT 70 AS id, 'Non-free' AS lbl -- UNION ALL  -- co/cpr
-            -- SELECT 80 AS id, '?' AS lbl UNION ALL  -- zz/ali
-            -- SELECT 90 AS id, '?' AS lbl  -- na/zxx
+            SELECT 65 AS id, 'MIT License' AS lbl UNION ALL  -- mi/mit
+            SELECT 70 AS id, 'copyright' AS lbl -- UNION ALL  -- co/cpr
+            SELECT 80 AS id, 'other' AS lbl UNION ALL  -- zz/ali
+            SELECT 90 AS id, 'unknown' AS lbl  -- na/zxx
         )
         SELECT apli.li, ll.lbl FROM apli JOIN license_labels ll ON (apli.id = ll.id)]]
 
