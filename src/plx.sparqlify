@@ -60,7 +60,7 @@ Create View apli AS
             SELECT 50 AS id, 'GNU Lesser General Public License' AS lbl UNION ALL  -- gl/gll
             SELECT 60 AS id, 'GNU Free Documentation License' AS lbl UNION ALL  -- gd/gfd
             SELECT 65 AS id, 'MIT License' AS lbl UNION ALL  -- mi/mit
-            SELECT 70 AS id, 'copyright' AS lbl -- UNION ALL  -- co/cpr
+            SELECT 70 AS id, 'copyright' AS lbl UNION ALL  -- co/cpr
             SELECT 80 AS id, 'other' AS lbl UNION ALL  -- zz/ali
             SELECT 90 AS id, 'unknown' AS lbl  -- na/zxx
         )
