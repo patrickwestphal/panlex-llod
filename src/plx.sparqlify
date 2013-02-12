@@ -86,7 +86,7 @@ Create View df As
         ?defn a plx:Definition.
         ?mean plx:meaningDefinition ?defn.
         ?defn plx:languageVariety ?lvar.
-        ?defn plx:text ?text.
+        ?defn rdfs:label ?text.
     }
     With
         ?defn = uri(concat(plx:definition, '/', ?df))
