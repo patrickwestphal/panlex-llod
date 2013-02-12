@@ -46,7 +46,7 @@ Create View ap As
 Create View apli AS
     Construct {
         ?lcns a plx:License.
-        ?lcns plx:label ?llbl.
+        ?lcns rdfs:label ?llbl.
     }
     With
         ?lcns = uri(concat(plx:license, '/', ?li))
