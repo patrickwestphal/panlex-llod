@@ -16,12 +16,12 @@ Create View ap As
     Construct {
         ?appr a plx:Approver.
         ?appr plx:registrationDate ?rgdt.
-        ?appr plx:label ?labl.
-        ?appr plx:uri ?uri.
+        ?appr rdfs:label ?labl.
+        ?appr foaf:homepage ?uri.
         ?appr plx:isbn ?isbn.
-        ?appr plx:author ?auth.
-        ?appr plx:title ?titl.
-        ?appr plx:publisher ?publ.
+        ?appr dc:creator ?auth.
+        ?appr dc:title ?titl.
+        ?appr dc:publisher ?publ.
         ?appr plx:yearOfPublication ?year.
         ?appr plx:quality ?qual.
         ?appr plx:license ?lcns
