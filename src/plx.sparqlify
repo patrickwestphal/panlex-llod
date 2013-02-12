@@ -118,7 +118,7 @@ Create View ex As
     Construct {
         ?expr a plx:Expression.
         ?expr plx:languageVariety ?lvar.
-        ?expr plx:text ?etxt.
+        ?expr rdfs:label ?etxt.
         ?expr plx:degradedText ?dtxt.
     }
     With
