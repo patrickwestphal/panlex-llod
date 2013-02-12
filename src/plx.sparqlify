@@ -198,6 +198,8 @@ Create View mn As
 Create View wc As
     Construct {
         ?wcls a plx:WordClass.
+        // FIXME: this should be rdfs:label but is given as plx:label in the SWJ submission
+        // so I leave it as it is
         ?wcls plx:label ?labl.
         ?deno plx:wordClass ?wcls.
     }
