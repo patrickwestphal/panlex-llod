@@ -157,8 +157,8 @@ Create View i1 As
 Create View lv AS
     Construct {
         ?lvar a plx:LanguageVariety.
-        ?lvar plx:belongsToLanguage ?lang.
-        ?lvar plx:languageVarietyName ?name
+        ?lvar plx:languageVarietyOf ?lang.
+        ?lvar rdfs:label ?name
     }
     With
         ?lvar = uri(concat(plx:languageVariety, '/', ?lv))
