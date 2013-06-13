@@ -165,7 +165,9 @@ Create View lv AS
         ?lang = uri(concat(plx:language, '/', ?lc))
         ?name = plainLiteral(?tt)
     From
-        lv
+        // join with ex since the language variety name is now taken from the
+        // expression table
+        [[SELECT lv.lv, lv.lc, ex.tt FROM lv JOIN ex ON lv.ex=ex.ex]]
 
 // (mi)
 // mappings concerning meaning identifiers (representing ids of other web
